@@ -1,10 +1,356 @@
-<html lang="en">
+<!DOCTYPE html>
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>1465</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>1465 - История Казахстана</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+    <style>
+        /* Новый стиль для "1465" */
+        .header-title {
+            font-size: 8rem; /* Увеличенный размер шрифта */
+            font-weight: 900;
+            color: #f2f2f2; /* Глубокий синий */
+            text-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2); /* Тень для текста */
+            animation: fadeIn 2s ease-out; /* Плавное появление */
+        }
+
+        /* Анимация для плавного появления */
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .card {
+            transition: transform 0.2s, box-shadow 0.2s;
+            border: 1px solid #2e6da4;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+        }
+
+        /* Кастомизация кнопок */
+        .btn-outline-primary {
+            color: #2e6da4;
+            border-color: #2e6da4;
+        }
+
+        .btn-outline-primary:hover {
+            background-color: #2e6da4;
+            color: white;
+        }
+
+        .btn {
+            border-radius: 5px;
+        }
+
+        .btn-primary {
+            background-color: #2e6da4;
+            border-color: #2e6da4;
+        }
+
+        .btn-primary:hover {
+            background-color: #1c4e79;
+            border-color: #1c4e79;
+        }
+
+        .btn {
+            background-color: #ffffff;
+            color: #2e6da4;
+            border: 2px solid #2e6da4;
+            transition: all 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #2e6da4;
+            color: white;
+        }
+
+        /* Новый стиль для блока с изображением */
+        .header-container {
+            height: 100%; /* Высота блока на весь экран */
+            background-image: url('/img/bg.jpg');
+            background-size: cover;
+            background-position: bottom; /* Перемещает изображение в верхнюю часть */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px 20px;
+        }
+
+        .header-container .container {
+            color: #ffffff;
+        }
+
+        /* Стили для чата */
+        #chat-popup {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            width: 300px;
+            height: 400px;
+            background-color: #fff;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        
+        #chat-header {
+            background-color: #2e6da4;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            font-size: 16px;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+        }
+
+        #chat-body {
+            padding: 10px;
+            overflow-y: auto;
+            flex-grow: 1;
+            font-size: 14px;
+        }
+
+        #chat-input {
+            display: flex;
+            padding: 10px;
+            border-top: 1px solid #ddd;
+        }
+
+        #chat-input input {
+            flex-grow: 1;
+            padding: 5px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        #chat-btn {
+            display: block;
+            margin: 0 auto;
+        }
+
+        #chat-input button {
+            margin-left: 10px;
+            background-color: #2e6da4;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #chat-popup .message {
+            margin-bottom: 10px;
+        }
+
+        #chat-popup .user-message {
+            text-align: right;
+        }
+
+        #chat-popup .bot-message {
+            text-align: left;
+            color: #2e6da4;
+        }
+    </style>
 </head>
 <body>
     
+    <div class="header-container">
+        <div class="container">
+            <h1 class="header-title mb-4">1465</h1>
+            <h1 class="display-4 mb-4">История Казахстана</h1>
+            <p class="lead mb-4">Присоединяйтесь к нашей платформе и откройте для себя увлекательный мир истории</p>
+            <a href="login.html" class="btn btn-primary btn-lg">Начать обучение</a>
+        </div>
+    </div>
+
+    <div class="container py-5">
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card h-100">
+                    <div class="card-body text-center">
+                        <i class="fas fa-book feature-icon" style="color: #2e6da4;"></i>
+                        <h5 class="card-title" style="color: #2e6da4;">Исторические факты</h5>
+                        <p class="card-text">Изучайте ключевые моменты истории через увлекательные факты и события. Погрузитесь в богатую историю Казахстана.</p>
+                        <a href="HistoryFakts.html" class="btn btn-outline-primary mt-3">Узнать больше</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card h-100">
+                    <div class="card-body text-center">
+                        <i class="fas fa-gamepad feature-icon" style="color: #2e6da4;"></i>
+                        <h5 class="card-title" style="color: #2e6da4;">Обучающие игры</h5>
+                        <p class="card-text">Развивайте свои знания через геймификацию и интерактивные элементы, делающие обучение увлекательным.</p>
+                        <a href="games.html" class="btn mt-3">Играть</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card h-100">
+                    <div class="card-body text-center">
+                        <i class="fas fa-trophy feature-icon" style="color: #2e6da4;"></i>
+                        <h5 class="card-title" style="color: #2e6da4;">Викторины и тесты</h5>
+                        <p class="card-text">Проверьте свои знания через интерактивные тесты. Получайте мгновенную обратную связь.</p>
+                        <a href="#" class="btn btn-outline-primary mt-3">Пройти тест</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="bg-light py-5">
+        <div class="container text-center">
+            <h2 class="display-5 mb-4" style="color: #2e6da4;">Станьте экспертом в истории Казахстана</h2>
+            <p class="lead mb-4">Познайте культуру, традиции и знаковые события страны, изучая материалы, разработанные ведущими историками. Уже более 1000 студентов оценили нашу платформу!</p>
+        </div>
+    </div>
+
+    <div class="container py-5">
+        <h3 class="text-center mb-4" style="color: #2e6da4;">Что говорят наши пользователи</h3>
+        <div id="reviewsCarousel" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <div class="row justify-content-center">
+                        <div class="col-md-4">
+                            <div class="card shadow-sm">
+                                <div class="card-body">
+                                    <p class="card-text">"Платформа просто невероятна! Я узнал столько нового о Казахстане, и все это в игровой форме!"</p>
+                                    <footer class="blockquote-footer">Алиса К., Студент</footer>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card shadow-sm">
+                                <div class="card-body">
+                                    <p class="card-text">"Очень нравится обучаться здесь. Все доступно, интересно и удобно!"</p>
+                                    <footer class="blockquote-footer">Бекзат Т., Учитель</footer>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Кнопка для открытия чата -->
+    <div class="text-center">
+        <button id="chat-btn" class="btn btn-primary btn-lg" onclick="toggleChat()">Чат с помощником</button>
+    </div>
+
+    <!-- Всплывающее окно для чата -->
+    <div id="chat-popup">
+        <div id="chat-header">Виртуальный помощник</div>
+        <div id="chat-body">
+            <div id="chat-messages"></div>
+        </div>
+        <div id="chat-input">
+            <input type="text" id="user-input" placeholder="Напишите что-нибудь..." />
+            <button onclick="sendMessage()">Отправить</button>
+        </div>
+    </div>
+
+    <script>
+        // Функция для открытия/закрытия чата
+        function toggleChat() {
+            const chatPopup = document.getElementById('chat-popup');
+            chatPopup.style.display = chatPopup.style.display === 'flex' ? 'none' : 'flex';
+        }
+    
+        async function sendMessage() {
+            const userInput = document.getElementById('user-input').value;
+            if (userInput.trim() === '') return;
+    
+            // Добавляем сообщение пользователя
+            const userMessage = document.createElement('div');
+            userMessage.classList.add('message', 'user-message');
+            userMessage.textContent = userInput;
+            document.getElementById('chat-messages').appendChild(userMessage);
+    
+            // Очищаем поле ввода
+            document.getElementById('user-input').value = '';
+    
+            // Отправляем запрос к API
+            const response = await getBotResponse(userInput);
+    
+            // Добавляем сообщение бота
+            const botMessage = document.createElement('div');
+            botMessage.classList.add('message', 'bot-message');
+            botMessage.textContent = response;
+            document.getElementById('chat-messages').appendChild(botMessage);
+    
+            // Прокручиваем чат вниз
+            const chatBody = document.getElementById('chat-body');
+            chatBody.scrollTop = chatBody.scrollHeight;
+        }
+    
+        // Функция для получения ответа от API
+        async function getBotResponse(userInput) {
+    const apiUrl = 'https://api.openai.com/v1/chat/completions'; // Новый URL для Chat API
+    const apiKey = 'example'; // Используйте сервер для безопасного хранения ключа
+
+    const requestData = {
+        model: 'gpt-3.5',
+        messages: [
+            { role: 'user', content: userInput }
+        ],
+        max_tokens: 100,
+        temperature: 0.7
+    };
+
+    const headers = {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${apiKey}`
+    };
+
+    try {
+        const response = await fetch(apiUrl, {
+            method: 'POST',
+            headers: headers,
+            body: JSON.stringify(requestData)
+        });
+
+        if (response.status === 429) {
+            // Ошибка 429 — слишком много запросов, подождем и повторим запрос
+            const retryAfter = response.headers.get('Retry-After') || 1; // Получаем время, через которое можно повторить запрос
+            console.log(`Превышен лимит запросов, повтор через ${retryAfter} секунд...`);
+            await new Promise(resolve => setTimeout(resolve, retryAfter * 1000)); // Задержка перед повтором
+            return await getBotResponse(userInput); // Повторяем запрос
+        }
+
+        if (!response.ok) {
+            throw new Error(`Ошибка при запросе к API: ${response.statusText}`);
+        }
+
+        const data = await response.json();
+        return data.choices[0].message.content.trim(); // Ответ от модели GPT
+    } catch (error) {
+        console.error('Ошибка при получении ответа от API:', error);
+        return "Извините, я не могу ответить на ваш вопрос.";
+    }
+}
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

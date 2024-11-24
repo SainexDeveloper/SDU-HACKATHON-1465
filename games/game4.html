@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Путешествие по карте</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f4f4f4; /* Светлый фон */
+      color: #333; /* Темный текст */
+    }
+
+    .container {
+      background-color: #fff; /* Белый фон для основного контейнера */
+      border-radius: 8px;
+      padding: 30px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      color: #2c3e50; /* Темно-синий цвет заголовка */
+      font-family: 'Arial', sans-serif;
+    }
+
+    p {
+      color: #7f8c8d; /* Светло-серый текст */
+      font-size: 18px;
+    }
+
+    #map {
+      width: 100%;
+      height: 500px;
+      margin-top: 20px;
+      border-radius: 8px;
+    }
+
+    .question-box {
+      margin-top: 20px;
+      display: none;
+      background-color: #ecf0f1; /* Легкий серый фон для блока вопросов */
+      padding: 20px;
+      border-radius: 8px;
+    }
+
+    .btn-primary {
+      background-color: #3498db; /* Синий цвет для кнопок */
+      border: none;
+      font-weight: bold;
+      margin: 5px;
+      border-radius: 5px;
+    }
+
+    .btn-primary:hover {
+      background-color: #2980b9; /* Темный синий цвет для кнопки при наведении */
+    }
+
+    .nav-link {
+      color: #3498db;
+    }
+
+    .nav-link:hover {
+      color: #2980b9;
+    }
+
+    h4 {
+      color: #2c3e50;
+      font-weight: bold;
+    }
+
+    #score {
+      color: #27ae60; /* Зеленый цвет для счета */
+    }
+  </style>
+</head>
+<body>
+  <div class="container mt-5">
+    <a class="nav-link" href="/games.html">Назад</a>
+    <h1>Путешествие по карте</h1>
+    <p>Нажимайте на метки на карте, чтобы ответить на вопросы о местах Казахстана!</p>
+    <div id="map"></div>
+    <div class="question-box" id="question-box">
+      <h3 id="question"></h3>
+      <button class="btn btn-primary" onclick="checkAnswer('A')">Вариант A</button>
+      <button class="btn btn-primary" onclick="checkAnswer('B')">Вариант B</button>
+      <button class="btn btn-primary" onclick="checkAnswer('C')">Вариант C</button>
+    </div>
+    <div class="mt-3">
+      <h4>Счет: <span id="score">0</span></h4>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/leaflet/dist/leaflet.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet/dist/leaflet.css" />
+  <script>
+    // Настройка карты
+    let map = L.map('map').setView([48.0, 67.0], 5); // Координаты центра Казахстана
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+
+    // Исторические места
+    const places = [
+      {
+        coords: [43.3, 68.3],
+        name: 'Туркестан',
+        question: 'Какую роль играл Туркестан в истории Казахского ханства?',
+        answers: {
+          A: 'Религиозный и духовный центр казахов',
+          B: 'Крупный торговый узел Шёлкового пути',
+          C: 'Резиденция казахских ханов',
+        },
+        correct: 'A'
+      },
+      {
+        coords: [43.2, 76.8],
+        name: 'Алматы',
+        question: 'Какую историческую роль играл Алматы в XX веке?',
+        answers: {
+          A: 'Столица Казахской ССР',
+          B: 'Культурный центр кочевников',
+          C: 'Военный опорный пункт Российской империи',
+        },
+        correct: 'A'
+      },
+      {
+        coords: [51.2, 71.4],
+        name: 'Астана',
+        question: 'Какой исторический шаг привёл к переносу столицы в Астану в 1997 году?',
+        answers: {
+          A: 'Необходимость укрепления северных регионов',
+          B: 'Реконструкция исторического центра',
+          C: 'Возвращение традиционной столицы казахов',
+        },
+        correct: 'A'
+      },
+      {
+        coords: [49.8, 73.1],
+        name: 'Караганда',
+        question: 'Какую историческую роль играл Карлаг во времена СССР?',
+        answers: {
+          A: 'Место содержания политических заключённых',
+          B: 'Опорный пункт торговли с Китаем',
+          C: 'Культурный центр Казахского ханства',
+        },
+        correct: 'A'
+      },
+      {
+        coords: [47.1, 51.9],
+        name: 'Атырау',
+        question: 'Какое значение имел регион Атырау в эпоху Казахского ханства?',
+        answers: {
+          A: 'Место пастбищ и кочевий',
+          B: 'Центр торговли с Европой',
+          C: 'Крупный духовный центр',
+        },
+        correct: 'A'
+      },
+      {
+        coords: [44.5, 50.3],
+        name: 'Актау',
+        question: 'Какую историческую ценность имеет регион Мангистау?',
+        answers: {
+          A: 'На его территории находились сакские курганы',
+          B: 'Был частью Шёлкового пути',
+          C: 'Место стоянок древних кочевников',
+        },
+        correct: 'D'
+      },
+      {
+        coords: [42.3, 69.6],
+        name: 'Шымкент',
+        question: 'Какую историческую роль играл Отырар, недалеко от Шымкента?',
+        answers: {
+          A: 'Центр сопротивления монгольскому нашествию',
+          B: 'Главный город на Шёлковом пути',
+          C: 'Культурный центр исламского мира',
+        },
+        correct: 'A'
+      },
+      {
+        coords: [45.2, 77.5],
+        name: 'Алтын-Эмель',
+        question: 'Какое историческое событие связано с районом Алтын-Эмель?',
+        answers: {
+          A: 'Здесь происходили сражения с джунгарами',
+          B: 'Здесь жил и проповедовал Бекет-Ата',
+          C: 'Здесь находилась ставка Абылай-хана',
+        },
+        correct: 'A'
+      },
+      {
+        coords: [46.8, 75.1],
+        name: 'Балхаш',
+        question: 'Почему регион Балхаша был важен в эпоху Казахского ханства?',
+        answers: {
+          A: 'Район кочевий казахских жузов',
+          B: 'Место стратегической обороны',
+          C: 'Крупный центр торговли',
+        },
+        correct: 'A'
+      },
+      {
+        coords: [50.3, 58.3],
+        name: 'Байконур',
+        question: 'Какую историческую роль сыграл регион Байконура до космической эпохи?',
+        answers: {
+          A: 'Место кочевий сарматов и массагетов',
+          B: 'Крупный сельскохозяйственный регион',
+          C: 'Культурный центр сакской эпохи',
+        },
+        correct: 'D'
+      }
+    ];
+
+
+    let score = 0;
+    let currentQuestion = null;
+
+    // Добавление маркеров
+    places.forEach((place, index) => {
+      L.marker(place.coords).addTo(map).bindPopup(place.name).on('click', () => {
+        currentQuestion = index;
+        document.getElementById('question-box').style.display = 'block';
+        document.getElementById('question').innerText = place.question;
+        const buttons = document.querySelectorAll('.question-box button');
+        buttons[0].innerText = place.answers.A;
+        buttons[1].innerText = place.answers.B;
+        buttons[2].innerText = place.answers.C;
+      });
+    });
+
+    function checkAnswer(answer) {
+      const place = places[currentQuestion];
+      if (answer === place.correct) {
+        alert('Правильно!');
+        score++;
+      } else {
+        alert('Неправильно! Попробуйте снова.');
+      }
+      document.getElementById('score').innerText = score;
+      document.getElementById('question-box').style.display = 'none';
+    }
+  </script>
+</body>
+</html>

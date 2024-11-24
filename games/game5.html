@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Хронологический порядок</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+      background-color: #f0f8ff;
+    }
+    #game-container {
+      max-width: 600px;
+      margin: 50px auto;
+      padding: 20px;
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    h2 {
+      color: #333;
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+    #events {
+      list-style: none;
+      padding: 0;
+      margin: 20px 0;
+    }
+    #events li {
+      background: #f7f7f7;
+      margin: 10px 0;
+      padding: 10px;
+      cursor: grab;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      transition: background 0.3s;
+      font-size: 18px;
+    }
+    button {
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+      font-size: 16px;
+      border-radius: 6px;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    #result {
+      margin-top: 20px;
+      font-size: 18px;
+      color: #555;
+    }
+    .correct {
+      background-color: #d4edda !important;
+      border-color: #c3e6cb;
+    }
+    .incorrect {
+      background-color: #f8d7da !important;
+      border-color: #f5c6cb;
+    }
+    .level-container {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 30px;
+    }
+    .level-button {
+      background-color: #28a745;
+      color: #fff;
+      padding: 10px 20px;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+      border-radius: 6px;
+    }
+    .level-button:hover {
+      background-color: #218838;
+    }
+    .level-button:disabled {
+      background-color: #6c757d;
+      cursor: not-allowed;
+    }
+  </style>
+</head>
+<body>
+    <a class="nav-link" href="/games.html">Назад</a>
+  <div id="game-container">
+    <h2>Расположите события в хронологическом порядке</h2>
+    <ul id="events">
+      <!-- События будут добавлены через JavaScript -->
+    </ul>
+    <button onclick="checkOrder()">Проверить порядок</button>
+    <div id="result"></div>
+
+    <div class="level-container">
+      <button class="level-button" onclick="initializeLevel(2)" id="level2-button" disabled>Уровень 2</button>
+    </div>
+  </div>
+
+  <script>
+    const historicalEventsLevel1 = [
+      { id: 1, year: 1465, text: 'Создание Казахского ханства' },
+      { id: 2, year: 1731, text: 'Принятие Казахстана под протекторат Российской империи' },
+      { id: 3, year: 1991, text: 'Объявление независимости Казахстана' },
+      { id: 4, year: 1986, text: 'Декабрьские события в Алма-Ате' },
+      { id: 5, year: 1936, text: 'Образование Казахской ССР в составе СССР' },
+    ];
+
+    const historicalEventsLevel2 = [
+      { id: 1, year: 1219, text: 'Монгольское нашествие на территорию Казахстана' },
+      { id: 2, year: 1395, text: 'Разрушение города Сыгнак Тамерланом' },
+      { id: 3, year: 1465, text: 'Создание Казахского ханства' },
+      { id: 4, year: 1867, text: 'Реформа управления Казахстаном в составе Российской империи' },
+      { id: 5, year: 1920, text: 'Образование Киргизской Советской Социалистической Республики (КазССР)' },
+      { id: 6, year: 1916, text: 'Бунт в Казахстане против призыва в армию Российской империи' },
+    ];
+
+    let currentLevel = 1;
+    let historicalEvents = historicalEventsLevel1;
+
+    function shuffleArray(array) {
+      return array.sort(() => Math.random() - 0.5);
+    }
+
+    function initializeGame() {
+      const eventsContainer = document.getElementById('events');
+      const shuffledEvents = shuffleArray([...historicalEvents]);
+
+      eventsContainer.innerHTML = '';  // Очистить события перед началом игры
+
+      shuffledEvents.forEach(event => {
+        const li = document.createElement('li');
+        li.textContent = event.text;
+        li.dataset.year = event.year;
+        li.draggable = true;
+        eventsContainer.appendChild(li);
+      });
+
+      makeSortable(eventsContainer);
+    }
+
+    function makeSortable(container) {
+      let draggingElement;
+
+      container.addEventListener('dragstart', (e) => {
+        draggingElement = e.target;
+        e.target.classList.add('dragging');
+      });
+
+      container.addEventListener('dragend', (e) => {
+        e.target.classList.remove('dragging');
+      });
+
+      container.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        const afterElement = getDragAfterElement(container, e.clientY);
+        const dragging = document.querySelector('.dragging');
+        if (afterElement == null) {
+          container.appendChild(dragging);
+        } else {
+          container.insertBefore(dragging, afterElement);
+        }
+      });
+
+      function getDragAfterElement(container, y) {
+        const draggableElements = [...container.querySelectorAll('li:not(.dragging)')];
+        return draggableElements.reduce((closest, child) => {
+          const box = child.getBoundingClientRect();
+          const offset = y - box.top - box.height / 2;
+          if (offset < 0 && offset > closest.offset) {
+            return { offset: offset, element: child };
+          } else {
+            return closest;
+          }
+        }, { offset: Number.NEGATIVE_INFINITY }).element;
+      }
+    }
+
+    function checkOrder() {
+      const eventsContainer = document.getElementById('events');
+      const items = Array.from(eventsContainer.children);
+      const result = document.getElementById('result');
+
+      let isCorrect = true;
+      const correctOrder = historicalEvents
+        .slice()
+        .sort((a, b) => a.year - b.year)
+        .map(event => event.text);
+
+      items.forEach((item, index) => {
+        const currentText = item.textContent.trim();
+        if (currentText === correctOrder[index]) {
+          item.classList.add('correct');
+          item.classList.remove('incorrect');
+        } else {
+          item.classList.add('incorrect');
+          item.classList.remove('correct');
+          isCorrect = false;
+        }
+      });
+
+      result.textContent = isCorrect
+        ? 'Поздравляем! Все события расположены правильно!'
+        : 'Есть ошибки! Попробуйте еще раз.';
+
+      // Разблокировать второй уровень, если все правильно
+      if (isCorrect && currentLevel === 1) {
+        document.getElementById('level2-button').disabled = false;
+      }
+    }
+
+    function initializeLevel(level) {
+      currentLevel = level;
+      if (level === 1) {
+        historicalEvents = historicalEventsLevel1;
+      } else if (level === 2) {
+        historicalEvents = historicalEventsLevel2;
+      }
+      initializeGame();
+    }
+
+    initializeGame();
+  </script>
+</body>
+</html>

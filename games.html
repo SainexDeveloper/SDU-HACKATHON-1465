@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Выбор игры - История Казахстана</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: white; /* Цвет песочного фона */
+        }
+        /* Стили для блоков игр */
+        .game-card {
+            transition: transform 0.2s, box-shadow 0.2s;
+            border-radius: 15px;
+            background-color: #ffffff58;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 4px 6px #2e6da4;
+            cursor: pointer;
+            height: 100%; /* Сделаем высоту гибкой */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem; /* Отступ снизу */
+        }
+
+        .game-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Иконки квадратные, одинакового размера */
+        .game-icon {
+            width: 100px;    /* Фиксированная ширина */
+            height: 100px;   /* Фиксированная высота */
+            object-fit: cover;
+            margin-bottom: 1.5rem;
+        }
+
+        .game-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #343a40;
+            margin-bottom: 1rem;
+        }
+
+        .game-description {
+            font-size: 1rem;
+            color: #6c757d;
+            margin-bottom: 1.5rem;
+            flex-grow: 1;
+        }
+
+        .game-card .btn {
+            margin-top: auto;
+        }
+
+        /* Анимация для появления блоков */
+        .game-card {
+            opacity: 0;
+            animation: fadeInUp 0.5s ease-out forwards;
+        }
+
+        .game-card:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+
+        .game-card:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .game-card:nth-child(3) {
+            animation-delay: 0.3s;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Стили для выравнивания карточек */
+        .row.g-4 {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem; /* Отступ между карточками */
+        }
+
+        .col-md-4 {
+            flex: 1 1 30%;
+            display: flex;
+            justify-content: stretch;
+        }
+
+        /* Отступы между рядами карточек */
+        .container.py-5 {
+            margin-top: 3rem; /* Отступ сверху */
+            margin-bottom: 3rem; /* Отступ снизу */
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Шапка страницы -->
+    <div class="bg-light py-5" style="background-image: url('/img/background.png'); background-size: cover; background-position: center;">
+        <div class="container text-center">
+            <h1 class="display-4 mb-4">Выбор игры</h1>
+            <p class="lead mb-4">Выберите игру, чтобы начать обучаться через интерактивное взаимодействие!</p>
+        </div>
+    </div>
+    <a class="nav-link" href="index.html">Назад</a>
+
+    <!-- Секция с играми -->
+    <div class="container py-5">
+        <div class="row g-4">
+            <!-- Историческая память -->
+            <div class="col-md-4 mb-4">
+                <div class="game-card">
+                    <img src="/img/logo/memory.png" class="game-icon" alt="Историческая память">
+                    <h3 class="game-title">Историческая память</h3>
+                    <p class="game-description">Играйте, чтобы узнать важные события из истории Казахстана и укрепить историческую память.</p>
+                    <a href="games/game.html" class="btn btn-outline-primary mt-3">Начать</a>
+                </div>
+            </div>
+
+            <!-- Исторический кроссворд -->
+            <div class="col-md-4 mb-4">
+                <div class="game-card">
+                    <img src="/img/logo/puzzle.png" class="game-icon" alt="Исторический кроссворд">
+                    <h3 class="game-title">Исторический кроссворд</h3>
+                    <p class="game-description">Разгадывайте кроссворд, основанный на фактах из истории Казахстана.</p>
+                    <a href="games/game2.html" class="btn btn-outline-primary mt-3">Начать</a>
+                </div>
+            </div>
+
+            <!-- Правда или ложь -->
+            <div class="col-md-4 mb-4">
+                <div class="game-card">
+                    <img src="/img/logo/trueorlie.jpg" class="game-icon" alt="Правда или ложь">
+                    <h3 class="game-title">Правда или ложь - История Казахстана</h3>
+                    <p class="game-description">Проверяйте, насколько хорошо вы знаете историю Казахстана с помощью игры "Правда или ложь".</p>
+                    <a href="games/game3.html" class="btn btn-outline-primary mt-3">Начать</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row g-4">
+            <!-- Путешествие по карте -->
+            <div class="col-md-4 mb-4">
+                <div class="game-card">
+                    <img src="/img/logo/map.png" class="game-icon" alt="Путешествие по карте">
+                    <h3 class="game-title">Путешествие по карте</h3>
+                    <p class="game-description">Исследуйте карту Казахстана и узнавайте ключевые исторические места.</p>
+                    <a href="games/game4.html" class="btn btn-outline-primary mt-3">Начать</a>
+                </div>
+            </div>
+
+            <!-- Расположите события в хронологическом порядке -->
+            <div class="col-md-4 mb-4">
+                <div class="game-card">
+                    <img src="/img/logo/hronology.png" class="game-icon" alt="Расположите события в хронологическом порядке">
+                    <h3 class="game-title">Расположите события в хронологическом порядке</h3>
+                    <p class="game-description">Упорядочите исторические события Казахстана в правильном порядке.</p>
+                    <a href="games/game5.html" class="btn btn-outline-primary mt-3">Начать</a>
+                </div>
+            </div>
+
+            <!-- Викторина по истории Казахстана -->
+            <div class="col-md-4 mb-4">
+                <div class="game-card">
+                    <img src="/img/logo/quiz.png" class="game-icon" alt="Викторина по истории Казахстана">
+                    <h3 class="game-title">Викторина по истории Казахстана</h3>
+                    <p class="game-description">Проверьте свои знания о Казахстане с помощью викторины по истории.</p>
+                    <a href="games/game6.html" class="btn btn-outline-primary mt-3">Начать</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Подвал страницы -->
+    <footer class="bg-dark text-light py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>1465 - История Казахстана</h5>
+                    <p>Интерактивная образовательная платформа</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <div class="mb-2">
+                        <a href="#" class="text-light me-3"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="text-light me-3"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-light"><i class="fab fa-instagram"></i></a>
+                    </div>
+                    <p class="mb-0">©️ 2024 1465. Все права защищены.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

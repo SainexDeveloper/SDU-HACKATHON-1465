@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Историческая память</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    /* Общие стили для контейнера карточек */
+    .card-container { 
+      display: flex; 
+      justify-content: space-between; 
+      margin-top: 30px; 
+      gap: 20px; /* Расстояние между карточками */
+      flex-wrap: wrap;
+    }
+    
+    /* Стили для всех карточек */
+    .cards { 
+      width: 150px; 
+      padding: 20px; 
+      text-align: center; 
+      background-color: #f0f0f0; 
+      border-radius: 10px; 
+      margin: 10px; 
+      cursor: pointer; 
+      transition: background-color 0.3s ease, transform 0.3s ease; /* Плавное изменение */
+      font-size: 1.2rem;
+    }
+
+    /* Стили для карточек с событиями */
+    .card-event { 
+      background-color: lightblue;
+    }
+
+    /* Стили для карточек с датами */
+    .card-date { 
+      background-color: lightgreen;
+    }
+
+    /* Стили для карточек при перетаскивании */
+    .card-event.dragging, .card-date.dragging { 
+      opacity: 0.5; 
+      transform: scale(1.05); /* Увеличение карточки при перетаскивании */
+    }
+
+    /* Стиль для правильных ответов */
+    .matched { 
+      background-color: lightgreen; 
+      border: 2px solid #4CAF50; /* Зеленая рамка для правильных */
+    }
+
+    /* Стиль для ошибочных ответов */
+    .incorrect {
+      background-color: red;
+      color: white;
+      border: 2px solid darkred;
+    }
+
+    /* Стиль кнопки */
+    .btn {
+      width: 100%; /* Кнопка растягивается на всю ширину */
+      padding: 15px;
+    }
+  </style>
+</head>
+<body>
+  <a class="nav-link" href="/games.html">Назад</a>
+  
+  <div class="container mt-5">
+    <h1>Мини-игра "Историческая память"</h1>
+    <p>Соедините события с правильными датами!</p>
+
+    <!-- Уровни -->
+    <div id="level1" class="level">
+      <h2>Уровень 1</h2>
+      <div class="card-container">
+        <div id="event1" class="cards card-event" draggable="true" ondragstart="drag(event)">Казахское ханство основано</div>
+        <div id="event2" class="cards card-event" draggable="true" ondragstart="drag(event)">Казахстан стал независимым</div>
+        <div id="event3" class="cards card-event" draggable="true" ondragstart="drag(event)">Вступление в ООН</div>
+      </div>
+      <div class="card-container">
+        <div id="date1" class="cards card-date" ondrop="drop(event)" ondragover="allowDrop(event)">1456</div>
+        <div id="date2" class="cards card-date" ondrop="drop(event)" ondragover="allowDrop(event)">1991</div>
+        <div id="date3" class="cards card-date" ondrop="drop(event)" ondragover="allowDrop(event)">1992</div>
+      </div>
+    </div>
+
+    <div id="level2" class="level" style="display: none;">
+      <h2>Уровень 2</h2>
+      <div class="card-container">
+        <div id="event4" class="cards card-event" draggable="true" ondragstart="drag(event)">Подписание Конституции</div>
+        <div id="event5" class="cards card-event" draggable="true" ondragstart="drag(event)">Первые выборы президента</div>
+        <div id="event6" class="cards card-event" draggable="true" ondragstart="drag(event)">Основание Алматы</div>
+      </div>
+      <div class="card-container">
+        <div id="date4" class="cards card-date" ondrop="drop(event)" ondragover="allowDrop(event)">1995</div>
+        <div id="date5" class="cards card-date" ondrop="drop(event)" ondragover="allowDrop(event)">1996</div>
+        <div id="date6" class="cards card-date" ondrop="drop(event)" ondragover="allowDrop(event)">1854</div>
+      </div>
+    </div>
+
+    <div id="level3" class="level" style="display: none;">
+      <h2>Уровень 3</h2>
+      <div class="card-container">
+        <div id="event7" class="cards card-event" draggable="true" ondragstart="drag(event)">Первый космонавт Казахстана</div>
+        <div id="event8" class="cards card-event" draggable="true" ondragstart="drag(event)">Создание Национального банка</div>
+        <div id="event9" class="cards card-event" draggable="true" ondragstart="drag(event)">Новый экономический курс</div>
+      </div>
+      <div class="card-container">
+        <div id="date7" class="cards card-date" ondrop="drop(event)" ondragover="allowDrop(event)">1997</div>
+        <div id="date8" class="cards card-date" ondrop="drop(event)" ondragover="allowDrop(event)">2004</div>
+        <div id="date9" class="cards card-date" ondrop="drop(event)" ondragover="allowDrop(event)">1993</div>
+      </div>
+    </div>
+
+    <button class="btn btn-primary mt-3" onclick="checkResults()">Проверить</button>
+  </div>
+
+  <script>
+    let correctMatches = 0;
+    let totalMatches = 3; // Общее количество правильных ответов для первого уровня
+    let currentLevel = 1;
+
+    function allowDrop(event) {
+      event.preventDefault();
+    }
+
+    function drag(event) {
+      event.dataTransfer.setData("text", event.target.id);
+    }
+
+    function drop(event) {
+      event.preventDefault();
+      let data = event.dataTransfer.getData("text");
+      let draggedElement = document.getElementById(data);
+      let targetElement = event.target;
+
+      if (targetElement.classList.contains('card-date')) {
+        if (currentLevel === 1) {
+          if ((data === 'event1' && targetElement.id === 'date1') ||
+              (data === 'event2' && targetElement.id === 'date2') ||
+              (data === 'event3' && targetElement.id === 'date3')) {
+            targetElement.appendChild(draggedElement);
+            draggedElement.classList.remove('incorrect');
+            draggedElement.classList.add('matched');
+            correctMatches++;
+          } else {
+            draggedElement.classList.add('incorrect');
+            draggedElement.setAttribute('draggable', 'true');
+          }
+        } else if (currentLevel === 2) {
+          if ((data === 'event4' && targetElement.id === 'date4') ||
+              (data === 'event5' && targetElement.id === 'date5') ||
+              (data === 'event6' && targetElement.id === 'date6')) {
+            targetElement.appendChild(draggedElement);
+            draggedElement.classList.remove('incorrect');
+            draggedElement.classList.add('matched');
+            correctMatches++;
+          } else {
+            draggedElement.classList.add('incorrect');
+            draggedElement.setAttribute('draggable', 'true');
+          }
+        } else if (currentLevel === 3) {
+          if ((data === 'event7' && targetElement.id === 'date7') ||
+              (data === 'event8' && targetElement.id === 'date8') ||
+              (data === 'event9' && targetElement.id === 'date9')) {
+            targetElement.appendChild(draggedElement);
+            draggedElement.classList.remove('incorrect');
+            draggedElement.classList.add('matched');
+            correctMatches++;
+          } else {
+            draggedElement.classList.add('incorrect');
+            draggedElement.setAttribute('draggable', 'true');
+          }
+        }
+      }
+    }
+
+    function checkResults() {
+      if (correctMatches === totalMatches) {
+        alert("Поздравляем! Вы правильно соединили все события с датами. Переходите на следующий уровень.");
+        goToNextLevel();
+      } else {
+        alert("Попробуйте снова. Вы ошиблись в некоторых ответах.");
+        resetGame();
+      }
+    }
+
+    function resetGame() {
+      let draggedCards = document.querySelectorAll('.cards');
+      draggedCards.forEach(card => {
+        card.classList.remove('matched', 'incorrect');
+        card.setAttribute('draggable', 'true');
+      });
+      correctMatches = 0;
+    }
+
+    function goToNextLevel() {
+      if (currentLevel === 1) {
+        document.getElementById('level1').style.display = 'none';
+        document.getElementById('level2').style.display = 'block';
+        currentLevel = 2;
+      } else if (currentLevel === 2) {
+        document.getElementById('level2').style.display = 'none';
+        document.getElementById('level3').style.display = 'block';
+        currentLevel = 3;
+      }
+    }
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

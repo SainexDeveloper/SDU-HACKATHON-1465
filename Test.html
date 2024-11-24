@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ЕНТ: История Казахстана</title>
+  <!-- Bootstrap 5 -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f8f9fa;
+    }
+    .quiz-container {
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 20px;
+      background: #ffffff;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .question {
+      font-size: 1.5rem;
+      margin-bottom: 20px;
+    }
+    .answer {
+      margin-bottom: 10px;
+    }
+    .answer:hover {
+      background-color: #f0f0f0;
+      cursor: pointer;
+    }
+    .correct {
+      background-color: #28a745;
+      color: white;
+    }
+    .incorrect {
+      background-color: #dc3545;
+      color: white;
+    }
+    #next-btn {
+      margin-top: 20px;
+      display: none;
+    }
+    #result {
+      font-size: 1.2rem;
+      font-weight: bold;
+      margin-top: 20px;
+    }
+    #score {
+      font-size: 1rem;
+      color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <a class="nav-link" href="HistoryFakts.html">Назад</a>
+  <div class="container">
+    <div class="quiz-container">
+      <h1 class="text-center">ЕНТ: История Казахстана</h1>
+      <div class="question mt-4" id="question-text"></div>
+      <div id="answers-container" class="mb-4"></div>
+      <button id="next-btn" class="btn btn-primary w-100" onclick="nextQuestion()">Следующий вопрос</button>
+      <div id="result" class="text-center"></div>
+      <div id="score" class="text-center mt-3">Очки: 0</div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+  <script>
+    const questions = [
+      { question: "Когда было создано Казахское ханство?", answers: ["1450", "1465", "1480", "1500"], correct: 1 },
+      { question: "Кто был первым ханом Казахского ханства?", answers: ["Керей", "Жанибек", "Касым", "Абылай"], correct: 0 },
+      { question: "Какая битва произошла в 1643 году?", answers: ["Орбулакская", "Аягозская", "Ташкентская", "Оренбургская"], correct: 0 },
+      { question: "Когда произошло присоединение Младшего жуза к Российской империи?", answers: ["1723", "1731", "1745", "1750"], correct: 1 },
+      { question: "Как назывались годы великого бедствия?", answers: ["Ақтабан шұбырынды", "Қаралы жылдар", "Күрес жылдары", "Батырлар жылы"], correct: 0 },
+      { question: "Кто был ханом во время составления \"Жеті Жарғы\"?", answers: ["Тауке хан", "Абылай хан", "Касым хан", "Жангир хан"], correct: 0 },
+      { question: "Когда произошло национально-освободительное восстание?", answers: ["1837", "1868", "1916", "1920"], correct: 2 },
+      { question: "Кто руководил восстанием 1837-1847 годов?", answers: ["Кенесары Касымов", "Абылай хан", "Жанибек", "Амангельды Иманов"], correct: 0 },
+      { question: "Где находится мавзолей Ходжи Ахмеда Ясави?", answers: ["Тараз", "Туркестан", "Отрар", "Караганда"], correct: 1 },
+      { question: "В каком году была Орбулакская битва?", answers: ["1635", "1643", "1650", "1660"], correct: 1 },
+    ];
+
+    let currentQuestionIndex = 0;
+    let score = 0; // Очки игрока
+    const pointsPerQuestion = 10; // Очки за правильный ответ
+
+    function displayQuestion() {
+      const question = questions[currentQuestionIndex];
+      document.getElementById('question-text').innerText = question.question;
+      const answersContainer = document.getElementById('answers-container');
+      answersContainer.innerHTML = '';
+
+      question.answers.forEach((answer, index) => {
+        const answerElement = document.createElement('div');
+        answerElement.classList.add('btn', 'btn-outline-secondary', 'answer', 'w-100');
+        answerElement.innerText = answer;
+        answerElement.onclick = () => checkAnswer(index);
+        answersContainer.appendChild(answerElement);
+      });
+    }
+
+    function checkAnswer(selectedIndex) {
+      const question = questions[currentQuestionIndex];
+      const answersContainer = document.getElementById('answers-container');
+      const answerElements = answersContainer.getElementsByClassName('answer');
+
+      if (selectedIndex === question.correct) {
+        answerElements[selectedIndex].classList.replace('btn-outline-secondary', 'btn-success');
+        score += pointsPerQuestion; // Начисление очков
+        document.getElementById('score').innerText = `Очки: ${score}`;
+      } else {
+        answerElements[selectedIndex].classList.replace('btn-outline-secondary', 'btn-danger');
+        answerElements[question.correct].classList.replace('btn-outline-secondary', 'btn-success');
+      }
+
+      Array.from(answerElements).forEach(element => element.onclick = null);
+      document.getElementById('next-btn').style.display = 'block';
+    }
+
+    function nextQuestion() {
+      currentQuestionIndex++;
+      if (currentQuestionIndex < questions.length) {
+        displayQuestion();
+        document.getElementById('next-btn').style.display = 'none';
+      } else {
+        showResult();
+      }
+    }
+
+    function showResult() {
+      const resultText = `Вы набрали ${score} очков из ${questions.length * pointsPerQuestion} возможных.`;
+      document.getElementById('result').innerText = resultText;
+      document.getElementById('next-btn').style.display = 'none';
+      document.getElementById('answers-container').innerHTML = '';
+      document.getElementById('question-text').innerText = 'Тест завершён!';
+    }
+
+    displayQuestion(); // Инициализация викторины
+  </script>
+</body>
+</html>
+

@@ -1,0 +1,126 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa; /* Белый фон для всего экрана */
+    color: #333; /* Темный цвет текста */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+    width: 100%;
+    max-width: 400px;
+    background: #fff; /* Белый фон для контейнера */
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); /* Легкая тень */
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333; /* Темный цвет для заголовка */
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+}
+
+.input-group {
+    margin-bottom: 15px;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 0.9rem;
+    color: #555; /* Текст для меток, чуть темнее */
+}
+
+.input-group input,
+.options label {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.input-group input[type="text"],
+.input-group input[type="email"],
+.input-group input[type="password"] {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc; /* Светлая граница */
+    border-radius: 5px;
+    outline: none;
+    font-size: 1rem;
+    background: #f7f7f7; /* Светлый фон для полей ввода */
+    color: #333; /* Темный цвет для текста внутри полей */
+}
+
+.input-group input::placeholder {
+    color: #aaa; /* Светлый серый для плейсхолдера */
+}
+
+.input-group input:focus {
+    border: 2px solid #007bff; /* Синий цвет при фокусе */
+    background: #fff; /* Белый фон при фокусе */
+}
+
+.options {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.options label {
+    cursor: pointer;
+    font-size: 0.9rem;
+    color: #555; /* Текст опций в темно-сером */
+}
+
+.options input[type="radio"] {
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+.btn {
+    width: 100%;
+    padding: 12px;
+    background: #007bff; /* Синий цвет для кнопки */
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    color: #fff; /* Белый текст на кнопке */
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.btn:hover {
+    background: #0056b3; /* Темно-синий при наведении */
+}
+
+.switch {
+    text-align: center;
+    margin-top: 15px;
+    font-size: 0.9rem;
+    color: #555; /* Текст ссылки в темно-сером */
+}
+
+.switch a {
+    color: #007bff; /* Синий цвет для ссылки */
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+.switch a:hover {
+    color: #0056b3; /* Темно-синий при наведении */
+}
