@@ -4,39 +4,38 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Исторический кроссворд</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <style>
     body {
+      background-color: #f8f9fa;
       display: flex;
-      justify-content: center; /* Центрирование содержимого по горизонтали */
-      align-items: center; /* Центрирование по вертикали */
-      height: 100vh;
-      background-color: #f0f0f0;
-      margin: 0; /* Убираем отступы */
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
     }
 
     .container {
       text-align: center;
+      max-width: 800px;
     }
 
     .crossword {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(50px, 1fr)); /* Автоматическое заполнение колонок */
+      grid-template-columns: repeat(6, 50px);
       grid-gap: 5px;
-      justify-items: center; /* Центрирование содержимого ячеек по горизонтали */
-      align-items: center; /* Центрирование содержимого ячеек по вертикали */
-      place-items: center; /* Центрирование всей сетки в контейнере */
-      margin: 20px auto; /* Центрирование сетки внутри контейнера */
+      justify-content: center;
+      margin: 20px auto;
     }
 
     .cell {
       width: 50px;
       height: 50px;
-      text-align: center;
-      font-size: 20px;
-      background-color: #f0f0f0;
+      background-color: #fff;
       border: 1px solid #ccc;
-      white-space: nowrap; /* Предотвращает перенос текста */
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 
     .cell input {
@@ -46,19 +45,22 @@
       font-size: 20px;
       border: none;
       background-color: transparent;
-      white-space: nowrap; /* Запрещает перенос текста в ячейке */
     }
 
     .cell.correct {
-      background-color: lightgreen;
+      background-color: #d4edda;
     }
 
     .cell.incorrect {
-      background-color: lightcoral;
+      background-color: #f8d7da;
     }
 
     .level {
       display: none;
+    }
+
+    .active-level {
+      display: block;
     }
 
     .hint {
@@ -67,111 +69,105 @@
   </style>
 </head>
 <body>
-  <div class="container mt-5">
-    <a class="nav-link" href="/games.html">Назад</a>
-    <h1>Исторический кроссворд</h1>
-    <p>Заполните кроссворд, отвечая на вопросы!</p>
+  <div class="container p-3">
+    <a class="btn btn-secondary mb-3" href="/games.html">Назад</a>
+    <h1 class="mb-4">Исторический кроссворд</h1>
+    <p class="lead">Заполните кроссворд, отвечая на вопросы!</p>
 
     <!-- Уровень 1 -->
-    <div id="level1" class="level">
-      <h2>Уровень 1</h2>
+    <div id="level1" class="level active-level">
+      <h2 class="mb-3">Уровень 1</h2>
       <div class="crossword">
-        <div class="cell" id="cell1"><input type="text" maxlength="1" oninput="checkAnswer(1, this.value)"></div>
-        <div class="cell" id="cell2"><input type="text" maxlength="1" oninput="checkAnswer(2, this.value)"></div>
-        <div class="cell" id="cell3"><input type="text" maxlength="1" oninput="checkAnswer(3, this.value)"></div>
-        <div class="cell" id="cell4"><input type="text" maxlength="1" oninput="checkAnswer(4, this.value)"></div>
-        <div class="cell" id="cell5"><input type="text" maxlength="1" oninput="checkAnswer(5, this.value)"></div>
-        <div class="cell" id="cell6"><input type="text" maxlength="1" oninput="checkAnswer(6, this.value)"></div>
+        <div class="cell"><input type="text" maxlength="1"></div>
+        <div class="cell"><input type="text" maxlength="1"></div>
+        <div class="cell"><input type="text" maxlength="1"></div>
+        <div class="cell"><input type="text" maxlength="1"></div>
+        <div class="cell"><input type="text" maxlength="1"></div>
+        <div class="cell"><input type="text" maxlength="1"></div>
       </div>
       <div class="hint">
-        <p><strong>Подсказка 1:</strong> Как называется столица Казахстана? (Ответ: 6 букв)</p>
+        <p><strong>Подсказка:</strong> Как называется столица Казахстана? (Ответ: 6 букв)</p>
       </div>
       <button class="btn btn-primary mt-3" onclick="checkCrossword(1)">Проверить кроссворд</button>
     </div>
 
     <!-- Уровень 2 -->
     <div id="level2" class="level">
-      <h2>Уровень 2</h2>
+      <h2 class="mb-3">Уровень 2</h2>
       <div class="crossword">
-        <div class="cell" id="cell7"><input type="text" maxlength="1" oninput="checkAnswer(7, this.value)"></div>
-        <div class="cell" id="cell8"><input type="text" maxlength="1" oninput="checkAnswer(8, this.value)"></div>
-        <div class="cell" id="cell9"><input type="text" maxlength="1" oninput="checkAnswer(9, this.value)"></div>
-        <div class="cell" id="cell10"><input type="text" maxlength="1" oninput="checkAnswer(10, this.value)"></div>
-        <div class="cell" id="cell11"><input type="text" maxlength="1" oninput="checkAnswer(11, this.value)"></div>
-        <div class="cell" id="cell12"><input type="text" maxlength="1" oninput="checkAnswer(12, this.value)"></div>
-        <div class="cell" id="cell13"><input type="text" maxlength="1" oninput="checkAnswer(13, this.value)"></div>
-        <div class="cell" id="cell14"><input type="text" maxlength="1" oninput="checkAnswer(14, this.value)"></div>
-        <div class="cell" id="cell15"><input type="text" maxlength="1" oninput="checkAnswer(15, this.value)"></div>
-        <div class="cell" id="cell16"><input type="text" maxlength="1" oninput="checkAnswer(16, this.value)"></div>
+        <div class="cell"><input type="text" maxlength="1"></div>
+        <div class="cell"><input type="text" maxlength="1"></div>
+        <div class="cell"><input type="text" maxlength="1"></div>
+        <div class="cell"><input type="text" maxlength="1"></div>
+        <div class="cell"><input type="text" maxlength="1"></div>
+        <div class="cell"><input type="text" maxlength="1"></div>
+        <div class="cell"><input type="text" maxlength="1"></div>
+        <div class="cell"><input type="text" maxlength="1"></div>
+        <div class="cell"><input type="text" maxlength="1"></div>
       </div>
       <div class="hint">
-        <p><strong>Подсказка 2:</strong> Какое государство было основано в 1456 году? (Ответ: 15 букв)</p>
+        <p><strong>Подсказка:</strong> Какое государство было основано в 1456 году? (Ответ: 10 букв)</p>
       </div>
       <button class="btn btn-primary mt-3" onclick="checkCrossword(2)">Проверить кроссворд</button>
     </div>
-
-    <!-- Уровень 3 -->
-    <div id="level3" class="level">
-      <h2>Уровень 3</h2>
-      <div class="crossword">
-        <div class="cell" id="cell17"><input type="text" maxlength="1" oninput="checkAnswer(17, this.value)"></div>
-        <div class="cell" id="cell18"><input type="text" maxlength="1" oninput="checkAnswer(18, this.value)"></div>
-        <div class="cell" id="cell19"><input type="text" maxlength="1" oninput="checkAnswer(19, this.value)"></div>
-        <div class="cell" id="cell20"><input type="text" maxlength="1" oninput="checkAnswer(20, this.value)"></div>
-        <div class="cell" id="cell21"><input type="text" maxlength="1" oninput="checkAnswer(21, this.value)"></div>
-        <div class="cell" id="cell22"><input type="text" maxlength="1" oninput="checkAnswer(22, this.value)"></div>
-        <div class="cell" id="cell23"><input type="text" maxlength="1" oninput="checkAnswer(23, this.value)"></div>
-        <div class="cell" id="cell24"><input type="text" maxlength="1" oninput="checkAnswer(24, this.value)"></div>
-      </div>
-      <div class="hint">
-        <p><strong>Подсказка 3:</strong> Как называлась первая столица Казахстана? (Ответ: 7 букв)</p>
-      </div>
-      <button class="btn btn-primary mt-3" onclick="checkCrossword(3)">Проверить кроссворд</button>
-    </div>
+<!-- Уровень 3 -->
+<div id="level3" class="level">
+  <h2 class="mb-3">Уровень 3</h2>
+  <div class="crossword">
+    <div class="cell"><input type="text" maxlength="1"></div>
+    <div class="cell"><input type="text" maxlength="1"></div>
+    <div class="cell"><input type="text" maxlength="1"></div>
+    <div class="cell"><input type="text" maxlength="1"></div>
+    <div class="cell"><input type="text" maxlength="1"></div>
+    <div class="cell"><input type="text" maxlength="1"></div>
   </div>
+  <div class="hint">
+    <p><strong>Подсказка:</strong> Как называлась первая столица Казахстана? (Ответ: 8 букв)</p>
+  </div>
+  <button class="btn btn-primary mt-3" onclick="checkCrossword(3)">Проверить кроссворд</button>
+</div>
+</div>
 
-  <script>
-    // Ответы для каждого уровня
-    let answers = {
-      1: 'А', 2: 'С', 3: 'Т', 4: 'А', 5: 'Н', 6: 'А',   // Уровень 1
-      7: 'К', 8: 'А', 9: 'З', 10: 'А', 11: 'Х', 12: 'С', 13: 'С', 14: 'К', 15: 'О', 16: 'Е',   // Уровень 2
-      17: 'О', 18: 'Р', 19: 'Е', 20: 'Н', 21: 'Б', 22: 'У', 23: 'Р', 24: 'Г'  // Уровень 3
-    };
+<script>
+const answers = {
+  1: ['А', 'С', 'Т', 'А', 'Н', 'А'], // Уровень 1
+  2: ['К', 'А', 'З', 'А', 'Х', 'С', 'Т', 'А', 'Н',], // Уровень 2
+  3: ['А', 'Л', 'М', 'А', 'Т', 'Ы',] // Уровень 3
+};
 
-    function checkAnswer(cell, value) {
-      // Приводим как ответ, так и введённое значение к верхнему регистру и убираем лишние пробелы
-      const correctAnswer = answers[cell].toUpperCase();
-      const userAnswer = value.trim().toUpperCase();
+let currentLevel = 1;
 
-      if (userAnswer === correctAnswer) {
-        document.getElementById('cell' + cell).classList.add('correct');
-        document.getElementById('cell' + cell).classList.remove('incorrect');
-      } else {
-        document.getElementById('cell' + cell).classList.add('incorrect');
-        document.getElementById('cell' + cell).classList.remove('correct');
-      }
+function checkCrossword(level) {
+  const levelContainer = document.querySelector(`#level${level}`);
+  const cells = levelContainer.querySelectorAll('.cell input');
+  const correctAnswers = answers[level];
+  let allCorrect = true;
+
+  cells.forEach((cell, index) => {
+    const userAnswer = cell.value.trim().toUpperCase();
+    const correctAnswer = correctAnswers[index];
+
+    if (userAnswer === correctAnswer) {
+      cell.parentElement.classList.add('correct');
+      cell.parentElement.classList.remove('incorrect');
+    } else {
+      cell.parentElement.classList.add('incorrect');
+      cell.parentElement.classList.remove('correct');
+      allCorrect = false;
     }
+  });
 
-    function checkCrossword(level) {
-      const levelCells = document.querySelectorAll(`#level${level} .cell input`);
-      let allCorrect = true;
-
-      levelCells.forEach((cell, index) => {
-        const cellId = index + 1;
-        const userAnswer = cell.value.trim().toUpperCase();
-        const correctAnswer = answers[cellId].toUpperCase();
-
-        if (userAnswer !== correctAnswer) {
-          allCorrect = false;
-        }
-      });
-
-      if (allCorrect) {
-        alert('Поздравляем! Вы прошли уровень ' + level);
-      } else {
-        alert('Некоторые ответы неверные, попробуйте снова!');
-      }
+  if (allCorrect) {
+    alert(`Поздравляем! Вы успешно завершили уровень ${level}.`);
+    if (level < 3) {
+      currentLevel++;
+      document.getElementById(`level${currentLevel}`).classList.add('active-level');
+      document.getElementById(`level${currentLevel}`).scrollIntoView({ behavior: 'smooth' });
     }
-  </script>
+  } else {
+    alert('Некоторые ответы неверны. Попробуйте снова!');
+  }
+}
+</script>
 </body>
 </html>
