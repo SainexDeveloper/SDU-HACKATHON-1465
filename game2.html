@@ -1,0 +1,61 @@
+<!-- Уровень 3 -->
+<div id="level3" class="level">
+  <h2 class="mb-3">Уровень 3</h2>
+  <div class="crossword">
+    <div class="cell"><input type="text" maxlength="1"></div>
+    <div class="cell"><input type="text" maxlength="1"></div>
+    <div class="cell"><input type="text" maxlength="1"></div>
+    <div class="cell"><input type="text" maxlength="1"></div>
+    <div class="cell"><input type="text" maxlength="1"></div>
+    <div class="cell"><input type="text" maxlength="1"></div>
+  </div>
+  <div class="hint">
+    <p><strong>Подсказка:</strong> Как называлась первая столица Казахстана? (Ответ: 8 букв)</p>
+  </div>
+  <button class="btn btn-primary mt-3" onclick="checkCrossword(3)">Проверить кроссворд</button>
+</div>
+</div>
+
+<script>
+const answers = {
+  1: ['А', 'С', 'Т', 'А', 'Н', 'А'], // Уровень 1
+  2: ['К', 'А', 'З', 'А', 'Х', 'С', 'Т', 'А', 'Н',], // Уровень 2
+  3: ['А', 'Л', 'М', 'А', 'Т', 'Ы',] // Уровень 3
+};
+
+let currentLevel = 1;
+
+function checkCrossword(level) {
+  const levelContainer = document.querySelector(`#level${level}`);
+  const cells = levelContainer.querySelectorAll('.cell input');
+  const correctAnswers = answers[level];
+  let allCorrect = true;
+
+  cells.forEach((cell, index) => {
+    const userAnswer = cell.value.trim().toUpperCase();
+    const correctAnswer = correctAnswers[index];
+
+    if (userAnswer === correctAnswer) {
+      cell.parentElement.classList.add('correct');
+      cell.parentElement.classList.remove('incorrect');
+    } else {
+      cell.parentElement.classList.add('incorrect');
+      cell.parentElement.classList.remove('correct');
+      allCorrect = false;
+    }
+  });
+
+  if (allCorrect) {
+    alert(`Поздравляем! Вы успешно завершили уровень ${level}.`);
+    if (level < 3) {
+      currentLevel++;
+      document.getElementById(`level${currentLevel}`).classList.add('active-level');
+      document.getElementById(`level${currentLevel}`).scrollIntoView({ behavior: 'smooth' });
+    }
+  } else {
+    alert('Некоторые ответы неверны. Попробуйте снова!');
+  }
+}
+</script>
+</body>
+</html>
